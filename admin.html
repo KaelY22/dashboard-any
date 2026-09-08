@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Any Moon's</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Ajustes extra para modo oscuro en Tailwind */
+        body { background: #0f0f12; }
+        .bg-white, .bg-gray-50 { background-color: #1c1c1e !important; }
+        .text-gray-800, .text-gray-900 { color: #e5e5e5 !important; }
+        .border-gray-200, .border-gray-300 { border-color: #2a2a2e !important; }
+        .bg-gray-100 { background-color: #2a2a2e !important; }
+        .hover\:bg-gray-100:hover { background-color: #3b3b40 !important; }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="login-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="glass-card p-8 w-full max-w-sm rounded-3xl">
+            <h2 class="text-2xl font-bold mb-6 text-center">🎙️ Acceso Admin</h2>
+            <form id="login-form">
+                <input type="password" id="login-password" placeholder="Contraseña" required class="w-full border border-gray-700 rounded-xl p-3 mb-4 focus:border-gray-500 outline-none bg-gray-800 text-white">
+                <button type="submit" class="w-full btn-black py-3 rounded-xl font-bold">Ingresar</button>
+                <p id="login-error" class="text-red-400 text-sm mt-4 text-center hidden">Contraseña incorrecta</p>
+            </form>
+        </div>
+    </div>
+
+    <div id="admin-content" class="hidden">
+        <nav class="bg-gray-900 border-b border-gray-800 p-4 flex justify-between items-center sticky top-0 z-10 shadow-md">
+            <h1 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-lock text-gray-400"></i> Panel Any Moon's</h1>
+            <div class="flex gap-2">
+                <a href="index.html" class="text-sm btn-outline px-4 py-2 rounded-xl font-semibold">Ir al sitio</a>
+                <button onclick="logout()" class="text-sm bg-red-900/40 px-4 py-2 rounded-xl text-red-300 hover:bg-red-800 font-semibold">Salir</button>
+            </div>
+        </nav>
+
+        <main class="container mx-auto px-4 py-8 max-w-5xl space-y-8">
+            
+            <!-- Botones de import/export -->
+            <div class="flex flex-wrap gap-3 justify-end">
+                <button id="export-data-btn" class="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2.5 rounded-xl font-semibold"><i class="fa-solid fa-download mr-1"></i> Exportar JSON</button>
+                <button id="import-data-btn" class="bg-green-700 hover:bg-green-800 text-white px-5 py-2.5 rounded-xl font-semibold"><i class="fa-solid fa-upload mr-1"></i> Importar JSON</button>
+                <input type="file" id="import-file" accept=".json" class="hidden">
+            </div>
+
+            <!-- Avatar -->
+            <section class="glass-card p-6 md:p-8 rounded-3xl">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-2"><i class="fa-regular fa-image"></i> Foto de Perfil</h2>
+                <div class="flex flex-col md:flex-row gap-6 items-center">
+                    <div class="relative w-32 h-32 rounded-full border-4 border-gray-700 overflow-hidden bg-gray-800 shadow-lg">
+                        <img id="avatar-preview" src="" alt="Vista previa" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 w-full">
+                        <input type="url" id="avatar-url-input" placeholder="https://tudominio.com/avatar.png" class="w-full border border-gray-700 rounded-xl p-3 bg-gray-800 focus:border-gray-500">
+                        <div class="flex flex-wrap gap-3 mt-4">
+                            <button id="save-avatar-btn" class="btn-black px-6 py-2.5 rounded-xl font-bold">Guardar</button>
+                            <button id="remove-avatar-btn" class="bg-red-900/40 hover:bg-red-800 text-red-300 px-6 py-2.5 rounded-xl font-bold">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fandubs Principales con orden y tags -->
+            <section class="glass-card p-6 md:p-8 rounded-3xl">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><i class="fa-brands fa-youtube"></i> Fandubs Principales</h2>
+                <div class="mb-4 flex justify-between items-center flex-wrap gap-2">
+                    <input type="text" id="search-fandubs" placeholder="🔍 Buscar fandub..." class="w-full md:w-64 border border-gray-700 rounded-xl p-2 bg-gray-800">
+                </div>
+                <form id="form-fandub" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="hidden" id="fan-id">
+                    <input type="text" id="fan-title" placeholder="Título" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <input type="url" id="fan-img" placeholder="URL Miniatura" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <input type="url" id="fan-url" placeholder="URL Video (YouTube/TikTok)" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <input type="text" id="fan-platform" placeholder="Plataforma (Ej: YouTube)" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <input type="text" id="fan-tags" placeholder="Tags (separados por coma, ej: YouTube, TikTok, Cover)" class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <div class="md:col-span-2 flex justify-end gap-3 mt-2">
+                        <button type="button" id="btn-cancel-fan" class="hidden btn-outline px-5 py-2.5 rounded-xl font-semibold">Cancelar</button>
+                        <button type="submit" class="btn-black px-8 py-2.5 rounded-xl font-bold">Guardar</button>
+                    </div>
+                </form>
+                <div id="admin-fandubs-list" class="mt-8 space-y-3"></div>
+            </section>
+
+            <!-- Fandubs fuera de YouTube -->
+            <section class="glass-card p-6 md:p-8 rounded-3xl">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-video-slash"></i> Fandubs fuera de YouTube</h2>
+                <input type="text" id="search-clan" placeholder="🔍 Buscar video..." class="mb-4 w-full md:w-64 border border-gray-700 rounded-xl p-2 bg-gray-800">
+                <form id="form-clan" class="grid grid-cols-1 gap-4">
+                    <input type="hidden" id="clan-id">
+                    <input type="text" id="clan-title" placeholder="Título" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <input type="url" id="clan-img" placeholder="URL Miniatura" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <textarea id="clan-html" placeholder='Etiqueta <iframe src="...">' required rows="3" class="border border-gray-700 rounded-xl p-3 bg-gray-800 font-mono"></textarea>
+                    <div class="flex justify-end gap-3 mt-2">
+                        <button type="button" id="btn-cancel-clan" class="hidden btn-outline px-5 py-2.5 rounded-xl font-semibold">Cancelar</button>
+                        <button type="submit" class="btn-black px-8 py-2.5 rounded-xl font-bold">Guardar</button>
+                    </div>
+                </form>
+                <div id="admin-clan-list" class="mt-8 space-y-3"></div>
+            </section>
+
+            <!-- Redes Sociales -->
+            <section class="glass-card p-6 md:p-8 rounded-3xl">
+                <h2 class="text-2xl font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-share-nodes"></i> Redes Sociales</h2>
+                <input type="text" id="search-links" placeholder="🔍 Buscar red..." class="mb-4 w-full md:w-64 border border-gray-700 rounded-xl p-2 bg-gray-800">
+                <form id="form-link" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="hidden" id="link-id">
+                    <input type="text" id="link-name" placeholder="Nombre" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <input type="text" id="link-icon" placeholder="Icono (fa-brands fa-instagram)" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <input type="url" id="link-url" placeholder="URL" required class="border border-gray-700 rounded-xl p-3 bg-gray-800">
+                    <div class="md:col-span-3 flex justify-end gap-3 mt-2">
+                        <button type="button" id="btn-cancel-link" class="hidden btn-outline px-5 py-2.5 rounded-xl font-semibold">Cancelar</button>
+                        <button type="submit" class="btn-black px-8 py-2.5 rounded-xl font-bold">Guardar</button>
+                    </div>
+                </form>
+                <div id="admin-links-list" class="mt-8 space-y-3"></div>
+            </section>
+        </main>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

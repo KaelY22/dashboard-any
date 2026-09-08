@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Any Moon's | Fandubs & Covers</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="min-h-screen">
+
+    <header class="hero-header fade-in">
+        <div class="avatar-frame">
+            <img id="avatar-img" alt="Any Moon's Avatar" class="shadow-2xl" />
+        </div>
+        <h1>Any Moon's</h1>
+        <p>🎙️ Fandubs & Covers · Bienvenido a la Luna :3</p>
+    </header>
+
+    <main class="container mx-auto px-4 max-w-6xl pb-12">
+
+        <!-- ====== SECCIÓN: REDES + DISCORD (arriba) ====== -->
+        <section class="fade-in delay-1 mb-12 mt-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Redes Sociales -->
+                <div>
+                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-link text-emerald-400"></i> Redes Sociales
+                    </h2>
+                    <div id="links-container" class="flex flex-col gap-3"></div>
+                </div>
+                <!-- Discord -->
+                <div>
+                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-brands fa-discord text-indigo-400"></i> Comunidad en Discord
+                    </h2>
+                    <div id="discord-widget-custom" class="glass-card p-4 rounded-2xl min-h-[100px] flex items-center justify-center">
+                        <div class="text-center py-4 text-gray-400 flex items-center gap-3">
+                            <i class="fa-solid fa-spinner fa-spin text-indigo-400"></i> Cargando servidor...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Fandubs con filtros -->
+        <section class="mb-20 fade-in delay-2">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <i class="fa-solid fa-microphone-lines text-cyan-400"></i> Fandubs
+                </h2>
+                <div id="filters-container" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div id="fandubs-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+        </section>
+
+        <!-- Fandubs fuera de YouTube / Bóveda -->
+        <section class="mb-20 fade-in delay-3">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold flex items-center gap-3">
+                    <i class="fa-solid fa-vault text-purple-400"></i> Fandubs Clandestinos
+                </h2>
+                <p class="text-sm text-gray-400">Contenido que no puede estar en YouTube por políticas de Copyright</p>
+            </div>
+            <div id="clandestine-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7"></div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Any Moon's & Kael IV</p>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/public.js"></script>
+</body>
+</html>

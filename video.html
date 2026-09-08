@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor - Any Moon's</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .video-container iframe, .video-container video {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: none;
+            border-radius: 0.75rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans min-h-screen flex flex-col items-center justify-center p-4">
+    
+    <div class="w-full max-w-5xl">
+        <div class="flex justify-between items-center mb-6">
+            <button onclick="window.history.back()" class="bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-xl font-semibold backdrop-blur-sm transition-all flex items-center gap-2">
+                <i class="fa-solid fa-arrow-left"></i> Volver
+            </button>
+            <h1 id="video-title" class="text-xl md:text-2xl font-bold truncate px-4">Cargando...</h1>
+            <div class="w-24"></div> <!-- Espaciador invisible para centrar el título -->
+        </div>
+
+        <div id="video-wrapper" class="w-full relative pt-[56.25%] bg-black rounded-xl shadow-2xl overflow-hidden border border-gray-800 animate-pulse">
+            <!-- El iframe se inserta aquí -->
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/video.js"></script>
+</body>
+</html>

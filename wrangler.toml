@@ -1,0 +1,12 @@
+name = "api-anymoons"
+main = "worker/worker.js"
+compatibility_date = "2024-11-01"
+account_id = "b7ccd04fa7c5cd02effd43406b25e4a7"
+
+# Secret (NO versionar): env.ADMIN_PASSWORD
+# Configuralo con: wrangler secret put ADMIN_PASSWORD
+
+[[d1_databases]]
+binding = "DB"
+database_name = "anymoons-db"
+database_id = "ccbf7700-3508-465d-929a-4426cea132db"

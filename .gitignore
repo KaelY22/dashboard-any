@@ -1,1 +1,6 @@
 .directory
+.wrangler/
+.cache/
+node_modules/
+dist/
+*.log
